@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsylvanus.model.Book">
+	<resultMap type="com.lsylvanus.model.Book" id="bookResultMap">
+		<id column="b_id" property="id" />
+		<result column="b_number" property="cardNumber" />
+		<result column="b_bookName" property="name" />
+		<result column="b_stock" property="stock" />
+		<result column="b_AStrongerStock" property="AStrongerStock" />
+		<result column="b_classify" property="classify" />
+	</resultMap>
+	
+	<insert id="add" parameterType="com.lsylvanus.model.Book">
+		insert into books (b_number,b_bookName,b_stock,b_AStrongerStock,b_classify)
+		value(#{cardNumber},#{name},#{stock},#{AStrongerStock},#{classify});
+	</insert>
+	
+	<update id="updateBook" parameterType="com.lsylvanus.model.Book">
+		update books set 
+		b_stock = #{stock}
+		where b_id = #{id}
+	</update>
+	
+	<update id="update" parameterType="com.lsylvanus.model.Book">
+		update books set 
+		b_number = #{cardNumber},
+		b_bookName = #{name},
+		b_stock = #{stock}, 
+		b_AStrongerStock = #{AStrongerStock}, 
+		b_classify = #{classify} 
+		where b_id = #{id}
+	</update>
+	
+	<select id="selectAll" resultMap="bookResultMap">
+		select * from books;
+	</select>
+	
+	<select id="selectById" resultMap="bookResultMap">
+		select * from books where b_id=#{id};
+	</select>
+	
+	<select id="selectByNumber" resultMap="bookResultMap">
+		select * from books where b_number=#{cardNumber};
+	</select>
+	
+	<select id="selectByName" resultMap="bookResultMap">
+		select * from books where b_bookName=#{name};
+	</select>
+	
+	<delete id="delete" parameterType="com.lsylvanus.model.Book">
+		delete from books where b_id=#{id} 
+	</delete>
+</mapper>

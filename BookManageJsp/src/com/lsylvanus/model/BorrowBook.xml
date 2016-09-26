@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsylvanus.model.BorrowBook">
+	<resultMap type="com.lsylvanus.model.BorrowBook" id="returnBookMap">
+		<id column="rb_id" property="id" />
+	</resultMap>
+	
+	<resultMap type="com.lsylvanus.model.BorrowBook" id="borrowMap">
+		<id column="bb_id" property="id" />
+		<result column="bb_bookNumber" property="bookId" />
+		<result column="bb_userNumber" property="studentId" />
+		<result column="bb_borrowTime" property="borrowBeginTime" />
+		<result column="bb_returnTime" property="borrowEndtime" />
+	</resultMap>
+	
+	<insert id="borrowBook" parameterType="com.lsylvanus.model.BorrowBook">
+		insert into borrow_book (bb_bookNumber,bb_userNumber,bb_borrowTime,bb_returnTime)
+		value(#{bookId},#{studentId},#{borrowBeginTime},#{borrowEndtime});
+	</insert>
+	
+	<insert id="returnBook" parameterType="com.lsylvanus.model.BorrowBook">
+		insert into return_book (rb_borrowId,rb_returnTime)
+		value(#{id},#{borrowEndtime});
+	</insert>
+	
+	<select id="selectBorrowById" resultMap="borrowMap">
+		select * from borrow_book where bb_bookNumber = #{bookId} and bb_userNumber =#{studentId}
+	</select>
+	
+	<select id="selectBorrowByNumber" resultMap="borrowMap">
+		select * from borrow_book where bb_userNumber =#{cardNumber}
+	</select>
+	
+	<delete id="delete">
+		delete from borrow_book where bb_bookNumber = #{id}
+	</delete>
+	
+	<select id="selectReturnBook" resultMap="returnBookMap">
+		select * from return_book where rb_borrowId = #{id}
+	</select>
+	
+	<select id="selectBorrowAll" resultMap="borrowMap">
+		select * from borrow_book
+	</select>
+	
+	<select id="checkingBorrowBook" resultMap="borrowMap">
+		select * from borrow_book where bb_bookNumber = #{id}
+	</select>
+	
+</mapper>

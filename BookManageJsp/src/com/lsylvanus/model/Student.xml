@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsylvanus.model.Student" >
+	<resultMap type="com.lsylvanus.model.Student" id="studentmap">
+		<id column="s_id" property="id" />
+		<result column="s_name" property="name" />
+		<result column="s_department" property="department" />
+		<result column="s_userNumber" property="cardNumber" />
+	</resultMap>
+
+	<insert id="add" parameterType="com.lsylvanus.model.Student">
+		insert into student(s_name,s_userNumber,s_department)
+		value(#{name},#{cardNumber},#{department})
+	</insert>
+	
+	<select id="selectAll" resultMap="studentmap">
+		select * from student;
+	</select>
+	
+	<select id="selectById" resultMap="studentmap">
+		select * from student where s_id = #{id}
+	</select>
+	
+	<select id="selectByNumber" resultMap="studentmap">
+		select * from student where s_userNumber = #{cardNumber}
+	</select>
+	
+	<select id="selectLike" resultMap="studentmap">
+		select * from student where s_userNumber like CONCAT ('%','${cardNumber}','%' )
+	</select>
+	
+	<update id="update" parameterType="com.lsylvanus.model.Student">
+		update student set 
+		s_name = #{name},
+		s_department = #{department},
+		s_userNumber = #{cardNumber} 
+		where s_id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="com.lsylvanus.model.Student">
+		delete from student where s_id=#{id} 
+	</delete>
+</mapper>

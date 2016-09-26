@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsylvanus.model.Logn">
+	<resultMap type="com.lsylvanus.model.Logn" id="logoMap">
+		<id column="a_id" property="id" />
+		<result column="a_userNumber" property="lognNumber" />
+		<result column="a_name" property="name" />
+		<result column="a_password" property="password" />
+	</resultMap>
+	
+	<select id="lognChecking" resultMap="logoMap">
+		select * from admin where a_userNumber = #{lognNumber} and a_password =#{password}
+	</select>
+	
+	<select id="lognCheckingByLognName" resultMap="logoMap">
+		select * from admin where a_userNumber = #{lognNumber}
+	</select>
+	
+</mapper>
